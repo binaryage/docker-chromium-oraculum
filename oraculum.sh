@@ -23,7 +23,7 @@ if [[ "$cmd" = "build" ]]; then
 fi
 
 if [[ "$cmd" =~ ^(hello|version|sh|latest-revision|download|download-link|describe)$ ]]; then
-  docker run ${DOCKER_RUN_OPTS} -ti oraculum ${args}
+  docker run ${DOCKER_RUN_OPTS} oraculum ${args}
   exit $?
 fi
 
