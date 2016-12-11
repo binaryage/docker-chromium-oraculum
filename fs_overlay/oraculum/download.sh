@@ -24,6 +24,11 @@ mkdir -p "$CACHE_LOCATION"
 cd "$CACHE_LOCATION"
 curl -s "$ZIP_URL" > "$ZIP_FILE"
 
+if [[ ! -f "$ZIP_FILE" ]]; then
+  echo "failed to download Chromium snapshot from $ZIP_URL"
+  exit 31
+fi
+
 if grep -q "Not Found" "$ZIP_FILE"; then
   rm -rf "$CACHE_LOCATION"
   error "Chromium snapshot $PLATFORM/$REVISION not found at $ZIP_URL"
