@@ -21,6 +21,15 @@ ZIP_FILE="snapshot.zip"
 log "downloading $ZIP_URL"
 
 mkdir -p "$CACHE_LOCATION"
+
+finish() {
+  if [[ $? -ne 0 ]]; then
+    # on failure we don't want to leave incomplete cache behind
+    rm -rf "$CACHE_LOCATION"
+  fi
+}
+trap finish EXIT
+
 cd "$CACHE_LOCATION"
 curl -s "$ZIP_URL" > "$ZIP_FILE"
 
@@ -30,7 +39,6 @@ if [[ ! -f "$ZIP_FILE" ]]; then
 fi
 
 if grep -q "Not Found" "$ZIP_FILE"; then
-  rm -rf "$CACHE_LOCATION"
   error "Chromium snapshot $PLATFORM/$REVISION not found at $ZIP_URL"
   exit 30
 fi
