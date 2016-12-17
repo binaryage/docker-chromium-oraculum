@@ -5,14 +5,17 @@ set -e -o pipefail
 cmd=$1
 args=$@
 
+PLATFORM=Linux_x64
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CACHE_DIR="$ROOT/.cache"
 
 DOCKER_RUN_OPTS="\
--v $ROOT/.cache:/oraculum/cache \
+-v $CACHE_DIR:/oraculum/cache \
 -e ORACULUM_VERBOSE=$ORACULUM_VERBOSE \
--e DEFAULT_PLATFORM=Linux_x64"
+-e DEFAULT_PLATFORM=$PLATFORM"
 
 if [[ "$cmd" = "clean" ]]; then
+  rm -rf "$CACHE_DIR"
   docker rm oraculum
   exit $?
 fi
