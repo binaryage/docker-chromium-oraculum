@@ -25,6 +25,18 @@ if [[ "$cmd" = "build" ]]; then
   exit $?
 fi
 
+if [[ "$cmd" = "prune-cache" ]]; then
+  if [[ -d "$CACHE_DIR" ]]; then
+    keep_count=${2:-3} # keep last 3 folders by default
+    keep_no=$(( $keep_count + 1 ))
+    # http://unix.stackexchange.com/a/18814/188074
+    pushd "$CACHE_DIR" > /dev/null
+      ls -1td "$PLATFORM"/* | tail -n "+${keep_no}" | xargs rm -rf
+    popd > /dev/null
+  fi
+  exit $?
+fi
+
 if [[ "$cmd" =~ ^(hello|version|sh|latest-revision|download|download-link|describe)$ ]]; then
   docker run ${DOCKER_RUN_OPTS} oraculum ${args}
   exit $?
