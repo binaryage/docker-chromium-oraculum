@@ -31,7 +31,9 @@ if [[ "$cmd" = "prune-cache" ]]; then
     keep_no=$(( $keep_count + 1 ))
     # http://unix.stackexchange.com/a/18814/188074
     pushd "$CACHE_DIR" > /dev/null
-      ls -1td "$PLATFORM"/* | tail -n "+${keep_no}" | xargs rm -rf
+      if [[ -d "$PLATFORM" ]]; then
+        ls -1td "$PLATFORM"/* | tail -n "+${keep_no}" | xargs rm -rf
+      fi
     popd > /dev/null
   fi
   exit $?
