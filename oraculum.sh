@@ -16,7 +16,7 @@ DOCKER_RUN_OPTS="\
 
 if [[ "$cmd" = "clean" ]]; then
   rm -rf "$CACHE_DIR"
-  docker rm oraculum
+  docker rmi -f oraculum
   exit $?
 fi
 
