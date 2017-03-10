@@ -38,7 +38,7 @@ if [[ "$cmd" = "prune-cache" ]]; then
 fi
 
 if [[ "$cmd" =~ ^(hello|version|sh|latest-revision|download|download-link|describe)$ ]]; then
-  docker run ${DOCKER_RUN_OPTS} oraculum ${args}
+  docker run ${DOCKER_RUN_OPTS} --rm oraculum ${args}
   exit $?
 fi
 
