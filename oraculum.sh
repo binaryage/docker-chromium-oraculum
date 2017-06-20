@@ -14,6 +14,13 @@ DOCKER_RUN_OPTS="\
 -e ORACULUM_VERBOSE=$ORACULUM_VERBOSE \
 -e DEFAULT_PLATFORM=$PLATFORM"
 
+do_usage() {
+    echo -e "\nConsult the oraculum by sending exactly one command.\n"
+    echo -e "Usage:\n"
+    echo "oraculum.sh clean|build|prune-cache|hello|version|sh|latest-revision|download|download-link|describe"
+    exit 1
+}
+
 if [[ "$cmd" = "clean" ]]; then
   rm -rf "$CACHE_DIR"
   docker rmi -f oraculum
@@ -44,4 +51,8 @@ if [[ "$cmd" =~ ^(hello|version|sh|latest-revision|download|download-link|descri
   exit $?
 fi
 
-echo "unknown oraculum command"
+if [[ -n "$args" ]]; then
+  echo "unknown oraculum command"
+fi
+
+do_usage
