@@ -24,18 +24,14 @@ if [[ -z "$KEY" ]]; then
 fi
 
 set +e
-VALUE=$( { print_var RESULT | python -c "import sys, json; print json.load(sys.stdin)['$KEY']"; } 2> /dev/null )
+VALUE=$(print_var RESULT | jq -e ".$KEY" 2>&1)
 STATUS=$?
 set -e
 
 if [[ ${STATUS} -ne 0 ]]; then
-  log "failed to retrieve key '$KEY' from: $RESULT"
-  set +e
-  ERR=$( { print_var RESULT | python -c "import sys, json; print json.load(sys.stdin)['$KEY']"; } 2>&1 )
-  set -e
-  if [[ ! -z "$ERR" ]]; then
-    error "$ERR"
-  fi
+  error "failed to retrieve '$KEY' from: $URL"
+  error "$RESULT"
+  error "$VALUE"
   exit 33
 fi
 
