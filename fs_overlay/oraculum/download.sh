@@ -15,7 +15,7 @@ if [[ -d "$CACHE_LOCATION" ]]; then
   exit 0
 fi
 
-ZIP_URL=$(./download-link.sh ${REVISION} ${PLATFORM})
+ZIP_URL=$(./download-link.sh "${REVISION}" "${PLATFORM}")
 ZIP_FILE="snapshot.zip"
 
 log "downloading $ZIP_URL"

@@ -3,15 +3,15 @@
 set -e -o pipefail
 
 cmd=$1
-args=$@
+args=( "$@" )
 
 PLATFORM=Linux_x64
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CACHE_DIR="$ROOT/.cache"
 
-DOCKER_RUN_OPTS="\
--v $CACHE_DIR:/oraculum/cache \
--e ORACULUM_VERBOSE=$ORACULUM_VERBOSE \
+DOCKER_RUN_OPTS="
+-v $CACHE_DIR:/oraculum/cache
+-e ORACULUM_VERBOSE=$ORACULUM_VERBOSE
 -e DEFAULT_PLATFORM=$PLATFORM"
 
 do_usage() {
@@ -35,7 +35,7 @@ fi
 if [[ "$cmd" = "prune-cache" ]]; then
   if [[ -d "$CACHE_DIR" ]]; then
     keep_count=${2:-3} # keep last 3 folders by default
-    keep_no=$(( $keep_count + 1 ))
+    keep_no=$(( keep_count + 1 ))
     # http://unix.stackexchange.com/a/18814/188074
     pushd "$CACHE_DIR" > /dev/null
       if [[ -d "$PLATFORM" ]]; then
@@ -47,11 +47,11 @@ if [[ "$cmd" = "prune-cache" ]]; then
 fi
 
 if [[ "$cmd" =~ ^(hello|version|sh|latest-revision|download|download-link|describe)$ ]]; then
-  docker run ${DOCKER_RUN_OPTS} --rm oraculum ${args}
+  docker run ${DOCKER_RUN_OPTS} --rm oraculum "${args[@]}"
   exit $?
 fi
 
-if [[ -n "$args" ]]; then
+if [[ -n "${args[*]}" ]]; then
   echo "unknown oraculum command"
 fi
 

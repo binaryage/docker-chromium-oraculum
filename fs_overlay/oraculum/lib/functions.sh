@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 log() {
-  if [[ ! -z "$ORACULUM_VERBOSE" ]]; then
+  if [[ -n "$ORACULUM_VERBOSE" ]]; then
     (>&2 echo "$1")
   fi
 }
@@ -20,6 +20,7 @@ get_zip_name() {
   esac
 }
 
+# https://stackoverflow.com/a/4775612/84283
 print_var() {
   (cat <<__END__
 ${!1}

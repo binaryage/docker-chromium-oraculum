@@ -8,7 +8,7 @@ URL="https://www.googleapis.com/download/storage/v1/b/chromium-browser-snapshots
 
 log "fetching revision number for latest known snapshot from $URL"
 
-REVISION=$(curl -s -S ${URL})
+REVISION=$(curl -s -S "${URL}")
 
 if [[ ! "${REVISION}" =~ ^[0-9]+$ ]]; then
   log "error fetching revision number, got:"

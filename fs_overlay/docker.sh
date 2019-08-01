@@ -16,27 +16,27 @@ fi
 
 if [ "$cmd" = "latest-revision" ]; then
   cd /oraculum
-  exec ./latest-revision.sh ${@:2}
+  exec ./latest-revision.sh "${@:2}"
 fi
 
 if [ "$cmd" = "download-link" ]; then
   cd /oraculum
-  exec ./download-link.sh ${@:2}
+  exec ./download-link.sh "${@:2}"
 fi
 
 if [ "$cmd" = "download" ]; then
   cd /oraculum
-  exec ./download.sh ${@:2}
+  exec ./download.sh "${@:2}"
 fi
 
 if [ "$cmd" = "version" ]; then
   cd /oraculum
-  exec ./version.sh ${@:2}
+  exec ./version.sh "${@:2}"
 fi
 
 if [ "$cmd" = "describe" ]; then
   cd /oraculum
-  exec ./describe.sh ${@:2}
+  exec ./describe.sh "${@:2}"
 fi
 
 if [ "$cmd" = "sh" ]; then

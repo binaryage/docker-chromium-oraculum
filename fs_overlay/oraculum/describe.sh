@@ -10,6 +10,7 @@ KEY=$2
 URL="https://cr-rev.appspot.com/_ah/api/crrev/v1/redirect/$REVISION"
 RESULT=$(curl -s -S "${URL}")
 
+# shellcheck disable=SC2181
 if [[ $? -ne 0 ]]; then
   log "failed to fetch from $URL"
   error "${RESULT}" # RESULT should contain some error description thanks to curl's -S flag
