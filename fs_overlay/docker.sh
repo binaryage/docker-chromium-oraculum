@@ -2,6 +2,8 @@
 
 # this should be the docker entry point
 
+set -e -o pipefail
+
 cd /
 
 source ./oraculum/lib/setup.sh
